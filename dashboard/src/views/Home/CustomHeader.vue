@@ -19,9 +19,11 @@
               rounded-full
               text-white
               focus:outile-none"
+            @click="() => emit('create-account')"
           >
             Crie uma conta
           </button>
+
           <button
             class="
               px-6
@@ -31,6 +33,7 @@
               rounded-full
               text-brand-main
               focus:outile-none"
+            @click="() => emit('login')"
           >
             Entrar
           </button>
@@ -60,6 +63,7 @@
               rounded-full
               text-brand-main
               focus:outile-none"
+            @click="() => emit('create-account')"
           >
             Crie uma conta grátis!
           </button>
@@ -70,7 +74,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  setup(_, { emit }) {
+    return { emit }
+  }
+}
 </script>
 
 <style lang="postcss" scoped>

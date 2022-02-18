@@ -1,7 +1,8 @@
 import bus from '../utils/bus'
 
-const EVENT_NAME = 'modal:toggle'
+const EVENT_NAME = 'modal:toggle' // Nome padrão do serviço do modal.
 
+// Criando o serviço do Modal
 export default function useModal() {
   function open(payload = {}) {
     bus.emit(EVENT_NAME, { status: true, ...payload })
