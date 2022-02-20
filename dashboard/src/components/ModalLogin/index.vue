@@ -64,7 +64,13 @@
           :disabled="state.isLoading"
           type="submit"
         >
-          Entrar
+          <icon
+            v-if="state.isLoading"
+            name="loading"
+            size="30"
+            class="animate-spin"
+          />
+          <span v-else>Entrar</span>
         </button>
       </form>
     </div>
@@ -75,11 +81,25 @@
 import { reactive } from 'vue'
 import { useField } from 'vee-validate'
 import useModal from '../../hooks/useModal'
-import { validateEmptyAndLength3, validateEmptyAndEmail } from '../../utils/validators'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import Icon from '../Icon'
+
+import {
+  validateEmptyAndLength3,
+  validateEmptyAndEmail
+} from '../../utils/validators'
+import services from '../../services/'
 
 export default {
+  components: {
+    Icon
+  },
+
   setup() {
     const modal = useModal()
+    const router = useRouter()
+    const toast = useToast()
 
     const {
       value: emailValue,
@@ -104,7 +124,43 @@ export default {
       }
     })
 
-    const handleSubmit = () => {}
+    const handleSubmit = async () => {
+      try {
+        toast.clear()
+        state.isLoading = true
+
+        const { data } = await services.auth.login({
+          email: state.email.value,
+          password: state.password.value
+        })
+
+        toast.success('Acesso bem sucedido!')
+
+        window.localStorage.setItem('token', data.token)
+        router.push({ name: 'Feedbacks' })
+
+        state.isLoading = false
+        modal.close()
+        // ...
+      } catch (error) {
+        state.isLoading = false
+        state.hasErrors = true
+
+        const status = error.response.status
+
+        if (status === 404) {
+          toast.error('E-mail não encontrado.')
+          return
+        }
+
+        if (status === 401) {
+          toast.error('E-mail/Senha inválidos.')
+          return
+        }
+
+        toast.error('Ocorreu um erro ao fazer o login.')
+      }
+    }
 
     return { state, close: modal.close, handleSubmit }
   }

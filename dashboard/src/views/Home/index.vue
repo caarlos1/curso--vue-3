@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+// import { onMounted } from 'vue'
+// import { useRouter } from 'vue-router'
 
 import Contact from './Contact.vue'
 import CustomHeader from './CustomHeader.vue'
@@ -25,13 +25,13 @@ export default {
   components: { CustomHeader, Contact },
 
   setup() {
-    const router = useRouter()
+    // const router = useRouter()
     const modal = useModal()
 
-    onMounted(() => {
-      const token = window.localStorage.getItem('token')
-      if (token) router.push({ name: 'Feedbacks' })
-    })
+    // onMounted(() => {
+    //   const token = window.localStorage.getItem('token')
+    //   if (token) router.push({ name: 'Feedbacks' })
+    // })
 
     function handleLogin() {
       modal.open({

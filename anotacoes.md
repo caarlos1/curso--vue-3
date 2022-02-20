@@ -30,4 +30,14 @@ A idéia é criar um serviço que usa os eventos para comunicação.
 ## Bibliotecas Interessantes
 
 - tiny-emitter - Pequena biblioteca para trabalhar com eventos.
-- vee-validate - Biblioteca de validações
+- vee-validate - Biblioteca de validações.
+- vue-toastification - Biblioteca de notificações.
+
+## Práticas Interessantes
+
+- Colocar um interceptor no request que verifica se existe um token no local storage.
+- Posso importar o arquivo de roteamente do Vue.js e utilizar funções do vue-router.
+
+## Pesquisar
+
+- Estados globais com o Vue.js 3 (State Management)
